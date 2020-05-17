@@ -3,22 +3,22 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-  apiKey: "AIzaSyBjrR0oTer3ESspG_OWcATo7zOYscVwtcQ",
-  authDomain: "crwn-clothing-bc211.firebaseapp.com",
-  databaseURL: "https://crwn-clothing-bc211.firebaseio.com",
-  projectId: "crwn-clothing-bc211",
-  storageBucket: "crwn-clothing-bc211.appspot.com",
-  messagingSenderId: "94389148474",
-  appId: "1:94389148474:web:da949edd710cc299190e03"
+  apiKey: 'AIzaSyCdHT-AYHXjF7wOrfAchX4PIm3cSj5tn14',
+  authDomain: 'crwn-db.firebaseapp.com',
+  databaseURL: 'https://crwn-db.firebaseio.com',
+  projectId: 'crwn-db',
+  storageBucket: 'crwn-db.appspot.com',
+  messagingSenderId: '850995411664',
+  appId: '1:850995411664:web:7ddc01d597846f65'
 };
 
 firebase.initializeApp(config);
 
-export const createUserProfileDocument  = async (userAuth, additionalData) => {
+export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-  console.log(userRef);
+
   const snapShot = await userRef.get();
 
   if (!snapShot.exists) {
@@ -30,25 +30,20 @@ export const createUserProfileDocument  = async (userAuth, additionalData) => {
         email,
         createdAt,
         ...additionalData
-      })
-
+      });
     } catch (error) {
-      console.log('error creating user', error);
+      console.log('error creating user', error.message);
     }
   }
+
   return userRef;
-}
-
-
+};
 
 export const auth = firebase.auth();
-export const firestore  = firebase.firestore();
-
+export const firestore = firebase.firestore();
 
 const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account'});
+provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;
-
-
